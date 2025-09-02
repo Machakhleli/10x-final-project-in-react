@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
-export default function Login() {
-  const { login, user } = useAuth();
+export default function Signup() {
+  const { signup } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) navigate("/dashboard", { replace: true });
-  }, [user, navigate]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,8 +18,8 @@ export default function Login() {
       setError("Email and password are required.");
       return;
     }
-    const ok = login(email, password, remember);
-    if (!ok) setError("Invalid email or password");
+    const ok = signup(email, password, remember);
+    if (!ok) setError("User already exists");
     else navigate("/dashboard", { replace: true });
   }
 
@@ -33,7 +29,7 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-lg w-80"
       >
-        <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
+        <h2 className="text-xl font-bold mb-4 text-center">Sign Up</h2>
 
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
 
@@ -64,25 +60,12 @@ export default function Login() {
           Remember Me
         </label>
 
-        <p className="text-sm text-right mb-3">
-          <Link to="/reset" className="text-blue-500 hover:underline">
-            Forgot Password?
-          </Link>
-        </p>
-
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition"
         >
-          Login
+          Sign Up
         </button>
-
-        <p className="text-sm text-center mt-3">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-blue-500 hover:underline">
-            Sign Up
-          </Link>
-        </p>
       </form>
     </div>
   );
