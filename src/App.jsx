@@ -1,24 +1,34 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import ResetPassword from "./components/ResetPassword";
-import Dashboard from "./components/Dashboard";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import AuthPage from "./pages/AuthPage";
+import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-export default function App() {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/reset" element={<ResetPassword />} />
+    <BrowserRouter>
+      <Routes>
+        {/* All auth routes handled by AuthPage */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<AuthPage />} />
+        <Route path="/signup" element={<AuthPage />} />
+        <Route path="/reset-password" element={<AuthPage />} />
+        <Route path="/verify-otp" element={<AuthPage />} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
+        {/* Protected dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+
+export default App;
