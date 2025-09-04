@@ -1,20 +1,27 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/* All auth routes handled by AuthPage */}
+        {/* Redirect root → login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
+
+        {/* Auth routes */}
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<AuthPage />} />
         <Route path="/reset-password" element={<AuthPage />} />
         <Route path="/verify-otp" element={<AuthPage />} />
 
-        {/* Protected dashboard */}
+        {/* Dashboard (protected) */}
         <Route
           path="/dashboard"
           element={
@@ -24,11 +31,16 @@ function App() {
           }
         />
 
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Fallback 404 */}
+        <Route
+          path="*"
+          element={
+            <h1 className="text-center mt-20 text-xl font-bold">
+              404 - Page Not Found
+            </h1>
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
-
-export default App;
