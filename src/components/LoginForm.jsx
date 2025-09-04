@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
+import GoogleButton from "./GoogleButton";
 
 export default function LoginForm({ onSwitch }) {
   const navigate = useNavigate();
@@ -9,14 +10,15 @@ export default function LoginForm({ onSwitch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // fake login
     if (rememberMe) {
       localStorage.setItem("auth", "true");
     } else {
       sessionStorage.setItem("auth", "true");
     }
 
-    // Redirect to the page they were trying to access, or dashboard
+    // clear any Google user info
+    localStorage.removeItem("user");
+
     const from = location.state?.from?.pathname || "/dashboard";
     navigate(from, { replace: true });
   };
@@ -69,6 +71,9 @@ export default function LoginForm({ onSwitch }) {
       >
         Login
       </button>
+
+      {/* Google Login */}
+      <GoogleButton />
     </form>
   );
 }

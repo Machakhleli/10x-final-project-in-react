@@ -1,16 +1,26 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
     sessionStorage.removeItem("auth");
+    localStorage.removeItem("user");
     navigate("/login", { replace: true });
   };
 
   const handleGoBack = () => {
-    navigate(-1); // Go back to previous page
+    navigate(-1);
   };
 
   return (
@@ -20,6 +30,18 @@ export default function Dashboard() {
           ✅ Welcome to Dashboard
         </h1>
         <p className="text-green-600">You are successfully logged in!</p>
+
+        {user && (
+          <div className="mt-4">
+            <img
+              src={user.picture}
+              alt={user.name}
+              className="w-20 h-20 rounded-full mx-auto mb-2"
+            />
+            <p className="font-semibold text-gray-800">{user.name}</p>
+            <p className="text-sm text-gray-600">{user.email}</p>
+          </div>
+        )}
       </div>
 
       <div className="flex gap-4">

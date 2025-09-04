@@ -1,8 +1,8 @@
+import GoogleButton from "./GoogleButton";
+
 export default function SignupForm({ onSwitch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // fake signup → redirect to OTP verification
     if (onSwitch) {
       onSwitch("otp");
     }
@@ -41,6 +41,9 @@ export default function SignupForm({ onSwitch }) {
       >
         Sign Up
       </button>
+
+      {/* Google Sign Up */}
+      <GoogleButton />
 
       <p className="text-center text-sm text-gray-600">
         Already have an account?{" "}
