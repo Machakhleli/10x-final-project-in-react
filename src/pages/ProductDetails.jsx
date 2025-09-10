@@ -29,9 +29,16 @@ export default function ProductDetails() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <div className="max-w-lg w-full bg-white rounded-lg shadow-lg p-6 space-y-4">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-full h-auto rounded-lg mb-4"
+        />
         <h1 className="text-2xl font-bold">{product.name}</h1>
         <p className="text-gray-500">{product.category}</p>
-        <p className="text-blue-600 font-semibold text-xl">${product.price}</p>
+        <p className="text-blue-600 font-semibold text-xl">
+          ${product.price.toFixed(2)}
+        </p>
         <p className="text-gray-700">{product.description}</p>
 
         <div className="flex gap-4 mt-4">
@@ -42,13 +49,10 @@ export default function ProductDetails() {
             ← Back
           </button>
           <button
-            onClick={() => {
-              addToCart(product);
-              navigate("/cart");
-            }}
-            className="px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition"
+            onClick={() => addToCart(product)}
+            className="flex-1 px-4 py-2 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition"
           >
-            🛒 Add to Cart
+            Add to Cart
           </button>
         </div>
       </div>

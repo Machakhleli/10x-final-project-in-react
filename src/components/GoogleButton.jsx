@@ -28,17 +28,23 @@ export default function GoogleButton() {
 
     // Store auth flag
     sessionStorage.setItem("auth", "true");
-    // Store user info
-    localStorage.setItem("user", JSON.stringify(userInfo));
+    // Store user info including the profile picture
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        name: userInfo.name,
+        email: userInfo.email,
+        picture: userInfo.picture,
+      })
+    );
 
-    // Redirect back or to dashboard
     const from = location.state?.from?.pathname || "/dashboard";
     navigate(from, { replace: true });
   };
 
   return (
     <div className="mt-4">
-      <div id="google-btn" className="flex justify-center"></div>
+      <div id="google-btn"></div>
     </div>
   );
 }
